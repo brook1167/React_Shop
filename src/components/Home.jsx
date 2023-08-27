@@ -1,22 +1,30 @@
-import React, { createContext, useContext, useState } from "react";
-import faker from "faker";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import SingleProduct from "./SingleProduct";
 
 faker.seed(100);
 function Home() {
-  const productsArray = [...Array(6)].map((p) => ({
-    id: faker.datatype.uuid(),
-    name: faker.commerce.productName(),
-    price: faker.commerce.price(),
-    image: faker.random.image(),
-  }));
-  // console.log(productsArray);
+  const [data, setData] = useState([]);
+  const getData = () => {
+    const url = "https://fakestoreapi.com/products";
+    fetch(url)
+      .then(function (response) {
+        console.log(response);
+        return response.json();
+      })
+      .then(function (myJson) {
+        setData(myJson);
+      });
+  };
 
-  const [products] = useState(productsArray);
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const [products] = useState(data);
 
   return (
     <div className="productContainer">
-      {products.map((product) => (
+      {data.map((product) => (
         <SingleProduct product={product} key={product.id} />
       ))}
     </div>

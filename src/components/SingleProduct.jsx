@@ -8,7 +8,7 @@ const SingleProduct = ({ product }) => {
   console.log(cart);
   return (
     <div className="card m-2">
-      <img src={product.image} />
+      <img src={product.image} width={"200px"} height={"200px"} />
       <div className="productDesc">
         <span style={{ fontWeight: 700 }}>{product.name}</span>
         <span>${product.price}</span>
